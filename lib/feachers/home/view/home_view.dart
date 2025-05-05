@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:ecommerce_admin/core/theme/app_padding.dart';
@@ -6,6 +5,7 @@ import 'package:ecommerce_admin/core/widgets/buttons/custom_button.dart';
 import 'package:ecommerce_admin/core/widgets/loading/custom_loading_widget.dart';
 import 'package:ecommerce_admin/core/widgets/textfieds/custom_text_field.dart';
 import 'package:ecommerce_admin/core/widgets/toast_message/toast_message.dart';
+import 'package:ecommerce_admin/feachers/category/view/category_view.dart';
 import 'package:ecommerce_admin/feachers/home/view_model/cubit.dart';
 import 'package:ecommerce_admin/feachers/home/view_model/states.dart';
 import 'package:flutter/material.dart';
@@ -60,12 +60,15 @@ class HomeView extends StatelessWidget {
                               onSelected: (value) {
                                 cubit.categoryIdController.text = value ?? '';
                               },
-                              dropdownMenuEntries: List.generate(cubit.categories.length, (index) {
-                                return DropdownMenuEntry(
-                                  value: cubit.categories[index].id,
-                                  label: cubit.categories[index].name,
-                                );
-                              }),
+                              dropdownMenuEntries: List.generate(
+                                cubit.categories.length,
+                                (index) {
+                                  return DropdownMenuEntry(
+                                    value: cubit.categories[index].id ?? '',
+                                    label: cubit.categories[index].name,
+                                  );
+                                },
+                              ),
                             ),
                             SizedBox(height: 20),
                             GestureDetector(
@@ -77,11 +80,19 @@ class HomeView extends StatelessWidget {
                                     Container(
                                       width: 200,
                                       height: 200,
-                                      decoration: BoxDecoration(color: Colors.white),
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                      ),
                                       child:
                                           cubit.image == null
-                                              ? Icon(Icons.photo_camera_back_outlined, size: 60)
-                                              : Image.file(File(cubit.image!.path)),
+                                              ? Icon(
+                                                Icons
+                                                    .photo_camera_back_outlined,
+                                                size: 60,
+                                              )
+                                              : Image.file(
+                                                File(cubit.image!.path),
+                                              ),
                                     ),
                                     CloseButton(
                                       color: Colors.red,
@@ -95,26 +106,48 @@ class HomeView extends StatelessWidget {
                             CustomTextField(
                               label: 'Name',
                               controller: cubit.nameController,
-                              validator: (p0) => p0!.isEmpty ? 'name is required' : null,
+                              validator:
+                                  (p0) =>
+                                      p0!.isEmpty ? 'name is required' : null,
                             ),
                             SizedBox(height: 20),
                             CustomTextField(
                               label: 'Description',
                               controller: cubit.descriptionController,
-                              validator: (p0) => p0!.isEmpty ? 'description is required' : null,
+                              validator:
+                                  (p0) =>
+                                      p0!.isEmpty
+                                          ? 'description is required'
+                                          : null,
                             ),
                             SizedBox(height: 20),
                             CustomTextField(
                               keyboardType: TextInputType.number,
                               label: 'Price',
                               controller: cubit.priceController,
-                              validator: (p0) => p0!.isEmpty ? 'price is required' : null,
+                              validator:
+                                  (p0) =>
+                                      p0!.isEmpty ? 'price is required' : null,
                             ),
                             SizedBox(height: 20),
                             CustomButton(
                               text: 'Add Product',
                               onTap: () {
                                 cubit.addProduct(context);
+                              },
+                            ),
+                            SizedBox(height: 20),
+                            CustomButton(
+                              text: 'Add New Category',
+                              color: Colors.blue,
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder:
+                                        (context) => const AddCategoryView(),
+                                  ),
+                                );
                               },
                             ),
                           ],

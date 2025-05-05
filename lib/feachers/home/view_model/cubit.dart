@@ -30,7 +30,7 @@ class HomeCubit extends Cubit<HomeStates> {
   }
 
   Future<void> selectProudectImage() async {
-    final selectedImage = await ImagePockerHelper.getImageFromGallery();
+    final selectedImage = await ImagePickerHelper.getImageFromGallery();
     if (selectedImage != null) {
       image = selectedImage;
       emit(HomeUpdateImageState());

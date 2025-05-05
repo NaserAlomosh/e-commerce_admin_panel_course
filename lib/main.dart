@@ -1,7 +1,7 @@
 import 'package:ecommerce_admin/core/services/upload_image_service.dart';
 import 'package:ecommerce_admin/feachers/home/view/home_view.dart';
 import 'package:ecommerce_admin/firebase_options.dart';
-import 'package:firebase_core/firebase_core.dart';
+import "package:firebase_core/firebase_core.dart";
 import 'package:flutter/material.dart';
 
 GlobalKey<NavigatorState> appLevelKey = GlobalKey<NavigatorState>();
@@ -25,3 +25,11 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+ // write function for print 
+  String formatDateTime(DateTime dateTime) {
+    final day = dateTime.day.toString().padLeft(2, '0');
+    final month = dateTime.month.toString().padLeft(2, '0');
+    final year = dateTime.year.toString();
+
+    return '$day/$month/$year';
+  }
