@@ -1,6 +1,6 @@
 class UpdateCategoryRequestModel {
   final String name;
-  final String image;
+  String image;
 
   UpdateCategoryRequestModel({required this.name, required this.image});
 

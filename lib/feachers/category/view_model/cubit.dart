@@ -37,10 +37,10 @@ class CategoryCubit extends Cubit<CategoryState> {
         categoryName: categoryNameController.text,
         image: File(image?.path ?? ''),
       );
-      result.fold(
-        (error) => emit(CategoryErrorState(error: error)),
-        (_) => emit(CategorySuccessState()),
-      );
+      result.fold((error) => emit(CategoryErrorState(error: error)), (_) async {
+        await getAllCategories();
+        emit(CategorySuccessState());
+      });
     }
   }
 

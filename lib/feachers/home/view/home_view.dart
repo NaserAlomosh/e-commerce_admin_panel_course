@@ -137,16 +137,24 @@ class HomeView extends StatelessWidget {
                               },
                             ),
                             SizedBox(height: 20),
-                            CustomButton(
-                              text: 'Add New Category',
-                              color: Colors.blue,
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder:
-                                        (context) => const AddCategoryView(),
-                                  ),
+                            Builder(
+                              builder: (newContext) {
+                                return CustomButton(
+                                  text: 'Add New Category',
+                                  color: Colors.blue,
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder:
+                                            (context) => BlocProvider.value(
+                                              value:
+                                                  newContext.read<HomeCubit>(),
+                                              child: const AddCategoryView(),
+                                            ),
+                                      ),
+                                    );
+                                  },
                                 );
                               },
                             ),

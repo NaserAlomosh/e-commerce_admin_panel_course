@@ -25,11 +25,12 @@ class MyApp extends StatelessWidget {
     );
   }
 }
- // write function for print 
-  String formatDateTime(DateTime dateTime) {
-    final day = dateTime.day.toString().padLeft(2, '0');
-    final month = dateTime.month.toString().padLeft(2, '0');
-    final year = dateTime.year.toString();
 
-    return '$day/$month/$year';
-  }
+// write function for print
+String formatDateTime(DateTime dateTime) {
+  final day = dateTime.day.toString().padLeft(2, '0');
+  final month = dateTime.month.toString().padLeft(2, '0');
+  final year = dateTime.year.toString();
+
+  return '$day/$month/$year';
+}

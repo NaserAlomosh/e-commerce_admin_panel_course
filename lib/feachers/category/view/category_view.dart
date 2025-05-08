@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ecommerce_admin/core/models/category/category_response_model.dart';
 import 'package:ecommerce_admin/core/theme/app_padding.dart';
 import 'package:ecommerce_admin/core/widgets/buttons/custom_button.dart';
@@ -8,6 +9,9 @@ import 'package:ecommerce_admin/core/widgets/textfieds/custom_text_field.dart';
 import 'package:ecommerce_admin/core/widgets/toast_message/toast_message.dart';
 import 'package:ecommerce_admin/feachers/category/view_model/cubit.dart';
 import 'package:ecommerce_admin/feachers/category/view_model/state.dart';
+import 'package:ecommerce_admin/feachers/edit_category/view/edit_category_view.dart';
+import 'package:ecommerce_admin/feachers/home/view_model/cubit.dart';
+import 'package:ecommerce_admin/feachers/products/view/proudcts_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 part 'widgets/category_item_widget.dart';
@@ -25,6 +29,10 @@ class AddCategoryView extends StatelessWidget {
           centerTitle: true,
           backgroundColor: Colors.white,
           foregroundColor: Colors.black,
+          leading: IconButton(
+            onPressed: () => Navigator.pop(context),
+            icon: Icon(Icons.arrow_back_ios_new_rounded),
+          ),
         ),
         backgroundColor: Colors.white,
         body: BlocConsumer<CategoryCubit, CategoryState>(
@@ -33,10 +41,8 @@ class AddCategoryView extends StatelessWidget {
               CustomDialogLoadingWidget.show(context);
             } else if (state is CategorySuccessState) {
               Navigator.pop(context);
-              ToastMessage.showSuccessMessage(
-                context,
-                'Category added successfully',
-              );
+              ToastMessage.showSuccessMessage(context, 'Category added successfully');
+              //context.read<HomeCubit>().getAllCategories();
             } else if (state is CategorySelectImageErrorState) {
               ToastMessage.showErrorMessage(context, state.error);
             } else if (state is CategoryErrorState) {
@@ -82,15 +88,11 @@ class AddCategoryView extends StatelessWidget {
                                 Container(
                                   width: 200,
                                   height: 200,
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                  ),
+                                  decoration: BoxDecoration(color: Colors.white),
                                   child:
                                       cubit.image != null
                                           ? Image.file(File(cubit.image!.path))
-                                          : Icon(
-                                            Icons.photo_camera_back_outlined,
-                                          ),
+                                          : Icon(Icons.photo_camera_back_outlined),
                                 ),
                                 CloseButton(
                                   color: Colors.red,
@@ -110,9 +112,7 @@ class AddCategoryView extends StatelessWidget {
                           },
                         ),
                         ...List.generate(cubit.categories.length, (index) {
-                          return _CategoryItemWidget(
-                            category: cubit.categories[index],
-                          );
+                          return _CategoryItemWidget(category: cubit.categories[index]);
                         }),
                       ],
                     ),

@@ -21,7 +21,26 @@ class CategoryUsecase {
     }
   }
 
-  Future<Either<String, String>> updateCategroy(
+  Future<Either<String, CategoryResponseModel>> getCategoryById(
+    String categoryId,
+  ) async {
+    try {
+      final result =
+          await FirebaseFirestore.instance
+              .collection('categories')
+              .doc(categoryId)
+              .get();
+
+      CategoryResponseModel category = CategoryResponseModel.formJson(
+        result.data() ?? {},
+      );
+      return Right(category);
+    } on FirebaseException catch (e) {
+      return Left(e.toString());
+    }
+  }
+
+  Future<Either<String, String>> editCategroy(
     String categoryId,
     UpdateCategoryRequestModel updateCategoryRequestModel,
   ) async {
